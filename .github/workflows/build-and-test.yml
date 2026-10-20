@@ -1,0 +1,46 @@
+name: Build and Test
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '17 7 * * 0'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - run: ./build-and-test.cmd
+
+  publish-prerelease:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Build Release
+        run: dotnet build EntityFrameworkQueryAnalyzers.slnx -c Release -p:VersionSuffix="ci.${{ github.run_number }}"
+      - name: Pack prerelease
+        run: dotnet pack EntityFrameworkQueryAnalyzers.slnx -c Release -p:VersionSuffix="ci.${{ github.run_number }}" -o ./artifacts --no-build
+      - name: NuGet Login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: JayBazuzi
+      - name: Push to NuGet.org
+        run: dotnet nuget push "artifacts\*.nupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Tag release
+        run: |
+          $VERSION = (Get-ChildItem ./artifacts/*.nupkg | Select-Object -First 1).BaseName -replace '^Bazuzi\.EntityFrameworkQueryAnalyzers\.', ''
+          git tag "v$VERSION"
+          git push origin "v$VERSION"

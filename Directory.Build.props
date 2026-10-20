@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <!-- Verify (VerifyTests) sponsorship license: this is a public, no-revenue open-source project. -->
+    <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
+    <Verify_SponsorshipExemptionUntil>2027-10</Verify_SponsorshipExemptionUntil>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <Authors>Jay Bazuzi</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/JayBazuzi/EntityFrameworkQueryAnalyzers</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JayBazuzi/EntityFrameworkQueryAnalyzers</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+</Project>

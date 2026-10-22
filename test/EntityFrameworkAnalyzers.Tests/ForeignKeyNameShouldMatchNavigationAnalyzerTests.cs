@@ -30,10 +30,12 @@ public class ForeignKeyNameShouldMatchNavigationAnalyzerTests
             {
                 protected override void OnModelCreating(ModelBuilder modelBuilder)
                 {
+                    // begin-snippet: ForeignKeyNameShouldMatchNavigationAnalyzerExample
                     modelBuilder.Entity<Order>()
-                        .HasOne(o => o.{|#0:Customer|})
+                        .HasOne(o => o.{|#0:Customer|}) // info: Navigation property 'Customer' should be named 'Buyer' to match foreign key 'BuyerId'
                         .WithMany()
                         .HasForeignKey(o => o.BuyerId);
+                    // end-snippet
                 }
             }
             """;

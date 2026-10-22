@@ -7,7 +7,8 @@ Roslyn analyzers for Entity Framework Core queries.
 - Method building a query must return `IQueryable<T>`<!-- include: test\EntityFrameworkAnalyzers.Tests\RulesTableTests.RulesList.verified.md -->
 - Navigation property must only be read inside a query
 - Navigation property should be `virtual`
-- Navigation property name should match the foreign key<!-- endInclude -->
+- Navigation property name should match the foreign key
+- Foreign key name should end with the entity name and `Id`<!-- endInclude -->
 
 ## Example
 

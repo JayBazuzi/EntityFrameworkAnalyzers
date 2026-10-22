@@ -25,7 +25,7 @@ public sealed class PreferGenericHasOneAnalyzer : DiagnosticAnalyzer
         title: "Prefer generic `HasOne<T>()` over string `HasOne(\"...\")`",
         messageFormat: "Use a lambda or generic overload of 'HasOne' instead of strings",
         category: "Design",
-        DiagnosticSeverity.Info,
+        DiagnosticSeverity.Warning,
         isEnabledByDefault: true,
         description: "String-based HasOne is not checked by the compiler and breaks silently on rename.");
 

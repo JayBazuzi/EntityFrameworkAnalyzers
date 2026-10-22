@@ -17,6 +17,7 @@ public class RulesTableTests
         | Id | Title |
         | --- | --- |
         {string.Join("\n", rows)}
+
         """;
 
         return Verify(result, extension: "md");
@@ -27,9 +28,9 @@ public class RulesTableTests
     {
         var items =
             from descriptor in GetDescriptors()
-            select $"- {descriptor.Title}";
+            select $"- {descriptor.Title}\n";
 
-        return Verify(string.Join("\n", items), extension: "md");
+        return Verify(string.Join("", items), extension: "md");
     }
 
     private static IEnumerable<DiagnosticDescriptor> GetDescriptors()

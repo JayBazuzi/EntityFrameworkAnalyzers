@@ -10,7 +10,9 @@ Roslyn analyzers for Entity Framework Core queries.
 - Navigation property name should match the foreign key
 - Foreign key name should end with the entity name and `Id`
 - Primary key should be named `Id`
-- Prefer generic `HasOne<T>()` over string `HasOne("...")`<!-- endInclude -->
+- Prefer generic `HasOne<T>()` over string `HasOne("...")`
+- DbContext should have one `DbSet<T>` per entity type
+- `Entity<T>()` lambda parameter should be named after the entity type<!-- endInclude -->
 
 ## Example
 

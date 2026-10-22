@@ -4,4 +4,4 @@
 - Navigation property name should match the foreign key
 - Foreign key name should end with the entity name and `Id`
 - Primary key should be named `Id`
-- Prefer generic `HasOne<T>` over string `HasOne`
+- Prefer generic `HasOne<T>()` over string `HasOne("...")`

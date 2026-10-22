@@ -1,4 +1,4 @@
-using Verify = Bazuzi.EntityFrameworkQueryAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkQueryAnalyzers.ForeignKeyNameShouldMatchNavigationAnalyzer>;
+﻿using Verify = Bazuzi.EntityFrameworkQueryAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkQueryAnalyzers.ForeignKeyNameShouldMatchNavigationAnalyzer>;
 
 namespace Bazuzi.EntityFrameworkQueryAnalyzers.Tests;
 

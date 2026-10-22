@@ -1,4 +1,4 @@
-using Verify = Bazuzi.EntityFrameworkQueryAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkQueryAnalyzers.NavigationPropertyShouldBeVirtualAnalyzer>;
+﻿using Verify = Bazuzi.EntityFrameworkQueryAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkQueryAnalyzers.NavigationPropertyShouldBeVirtualAnalyzer>;
 
 namespace Bazuzi.EntityFrameworkQueryAnalyzers.Tests;
 

@@ -11,13 +11,12 @@ public class RulesTableTests
     {
         var rows =
             from descriptor in GetDescriptors()
-            select $"| {descriptor.Id} | {descriptor.Title} |";
+            select $"| {descriptor.Id} | {descriptor.Title} |\n";
 
         var result = $"""
         | Id | Title |
         | --- | --- |
-        {string.Join("\n", rows)}
-
+        {string.Join("", rows)}
         """;
 
         return Verify(result, extension: "md");

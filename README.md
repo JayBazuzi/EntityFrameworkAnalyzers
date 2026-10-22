@@ -17,6 +17,7 @@ Roslyn analyzers for Entity Framework Core queries.
 | ENTITY_FRAMEWORK_0004 | Navigation property name should match the foreign key |
 | ENTITY_FRAMEWORK_0005 | Foreign key name should end with the entity name and `Id` |
 | ENTITY_FRAMEWORK_0006 | Primary key should be named `Id` |
+| ENTITY_FRAMEWORK_0007 | Prefer generic `HasOne<T>` over string `HasOne` |
 <!-- endInclude -->
 
 ENTITY_FRAMEWORK_0002 is Info by default because you may prefer to use lazy loading and/or `Include()`. But if your style is to always project your read queries, you can elevate it to Warning.

@@ -18,6 +18,7 @@ Roslyn analyzers for Entity Framework Core queries.
 | ENTITY_FRAMEWORK_0005 | Foreign key name should end with the entity name and `Id` |
 | ENTITY_FRAMEWORK_0006 | Primary key should be named `Id` |
 | ENTITY_FRAMEWORK_0007 | Prefer generic `HasOne<T>()` over string `HasOne("...")` |
+| ENTITY_FRAMEWORK_0008 | DbContext should have one `DbSet<T>` per entity type |
 <!-- endInclude -->
 
 ENTITY_FRAMEWORK_0002 is Info by default because you may prefer to use lazy loading and/or `Include()`. But if your style is to always project your read queries, you can elevate it to Warning.

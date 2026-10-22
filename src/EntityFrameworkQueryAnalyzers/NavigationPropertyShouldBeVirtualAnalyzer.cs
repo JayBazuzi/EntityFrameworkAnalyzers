@@ -22,7 +22,7 @@ public sealed class NavigationPropertyShouldBeVirtualAnalyzer : DiagnosticAnalyz
         title: "Navigation property should be `virtual`",
         messageFormat: "Navigation property '{0}.{1}' should be virtual",
         category: "Design",
-        DiagnosticSeverity.Info,
+        DiagnosticSeverity.Warning,
         isEnabledByDefault: true,
         description: "Mark navigation properties virtual so that ENTITY_FRAMEWORK_0002 can recognize them " +
             "and check that they are only read inside queries.");

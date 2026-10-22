@@ -23,7 +23,7 @@ public sealed class NavigationPropertyReadAnalyzer : DiagnosticAnalyzer
         title: "Navigation property must only be read inside a query",
         messageFormat: "Navigation property '{0}.{1}' is read outside a query; it is null or empty unless it was loaded",
         category: "Reliability",
-        DiagnosticSeverity.Info,
+        DiagnosticSeverity.Warning,
         isEnabledByDefault: true,
         description: "Without lazy loading, a navigation property that wasn't loaded with Include() is null " +
             "or empty, which is indistinguishable from real data. Read navigations inside the query, e.g. by " +

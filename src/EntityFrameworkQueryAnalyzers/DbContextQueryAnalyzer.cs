@@ -24,7 +24,7 @@ public sealed class DbContextQueryAnalyzer : DiagnosticAnalyzer
         title: "Method building a query must return `IQueryable<T>`",
         messageFormat: "Method '{0}' builds a query from '{1}' but returns '{2}' instead of IQueryable<T>",
         category: "Design",
-        DiagnosticSeverity.Info,
+        DiagnosticSeverity.Warning,
         isEnabledByDefault: true,
         description: "Methods that build a query, whether by reading a DbContext's DbSet directly or by " +
             "adding more operators onto another method's IQueryable<T> result, should themselves return " +

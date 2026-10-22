@@ -9,8 +9,8 @@
     <VersionPrefix>0.1.0</VersionPrefix>
     <Authors>Jay Bazuzi</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/JayBazuzi/EntityFrameworkQueryAnalyzers</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/JayBazuzi/EntityFrameworkQueryAnalyzers</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/JayBazuzi/EntityFrameworkAnalyzers</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JayBazuzi/EntityFrameworkAnalyzers</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

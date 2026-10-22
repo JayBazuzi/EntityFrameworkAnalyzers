@@ -29,9 +29,9 @@ jobs:
         with:
           global-json-file: global.json
       - name: Build Release
-        run: dotnet build EntityFrameworkQueryAnalyzers.slnx -c Release -p:VersionSuffix="ci.${{ github.run_number }}"
+        run: dotnet build EntityFrameworkAnalyzers.slnx -c Release -p:VersionSuffix="ci.${{ github.run_number }}"
       - name: Pack prerelease
-        run: dotnet pack EntityFrameworkQueryAnalyzers.slnx -c Release -p:VersionSuffix="ci.${{ github.run_number }}" -o ./artifacts --no-build
+        run: dotnet pack EntityFrameworkAnalyzers.slnx -c Release -p:VersionSuffix="ci.${{ github.run_number }}" -o ./artifacts --no-build
       - name: NuGet Login
         uses: NuGet/login@v1
         id: login
@@ -41,6 +41,6 @@ jobs:
         run: dotnet nuget push "artifacts\*.nupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
       - name: Tag release
         run: |
-          $VERSION = (Get-ChildItem ./artifacts/*.nupkg | Select-Object -First 1).BaseName -replace '^Bazuzi\.EntityFrameworkQueryAnalyzers\.', ''
+          $VERSION = (Get-ChildItem ./artifacts/*.nupkg | Select-Object -First 1).BaseName -replace '^Bazuzi\.EntityFrameworkAnalyzers\.', ''
           git tag "v$VERSION"
           git push origin "v$VERSION"

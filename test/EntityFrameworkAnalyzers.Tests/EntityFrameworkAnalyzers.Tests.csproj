@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EntityFrameworkQueryAnalyzers\EntityFrameworkQueryAnalyzers.csproj" />
+    <ProjectReference Include="..\..\src\EntityFrameworkAnalyzers\EntityFrameworkAnalyzers.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EntityFrameworkAnalyzers/EntityFrameworkAnalyzers.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/EntityFrameworkAnalyzers.Tests/EntityFrameworkAnalyzers.Tests.csproj" />
+  </Folder>
+</Solution>

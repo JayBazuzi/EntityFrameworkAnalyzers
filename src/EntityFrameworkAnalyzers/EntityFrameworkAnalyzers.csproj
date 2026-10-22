@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Bazuzi.EntityFrameworkQueryAnalyzers</PackageId>
+    <PackageId>Bazuzi.EntityFrameworkAnalyzers</PackageId>
     <Description>Roslyn analyzers for Entity Framework Core: keep query construction composable and separate from materialization.</Description>
     <PackageTags>entityframework;efcore;analyzers;roslyn</PackageTags>
     <DevelopmentDependency>true</DevelopmentDependency>
@@ -31,7 +31,7 @@
 
   <Target Name="IncludeAnalyzersInPackage" BeforeTargets="_GetPackageFiles">
     <ItemGroup>
-      <None Include="$(OutputPath)\EntityFrameworkQueryAnalyzers.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+      <None Include="$(OutputPath)\EntityFrameworkAnalyzers.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     </ItemGroup>
   </Target>
 

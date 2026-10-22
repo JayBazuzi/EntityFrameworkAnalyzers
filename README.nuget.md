@@ -1,10 +1,10 @@
-# Bazuzi.EntityFrameworkQueryAnalyzers
+# Bazuzi.EntityFrameworkAnalyzers
 
 Roslyn analyzers for Entity Framework Core queries.
 
 ## Rules
 
-- Method building a query must return `IQueryable<T>`<!-- include: test\EntityFrameworkQueryAnalyzers.Tests\RulesTableTests.RulesList.verified.md -->
+- Method building a query must return `IQueryable<T>`<!-- include: test\EntityFrameworkAnalyzers.Tests\RulesTableTests.RulesList.verified.md -->
 - Navigation property must only be read inside a query
 - Navigation property should be `virtual`
 - Navigation property name should match the foreign key<!-- endInclude -->
@@ -13,7 +13,7 @@ Roslyn analyzers for Entity Framework Core queries.
 
 For example, this method builds a query but materializes it instead of returning `IQueryable<T>`:
 
-<!-- include: test\EntityFrameworkQueryAnalyzers.Tests\NugetReadmeTests.Example.verified.md -->
+<!-- include: test\EntityFrameworkAnalyzers.Tests\NugetReadmeTests.Example.verified.md -->
 ```cs
     public Widget GetFirstActive() // info: Method 'GetFirstActive' builds a query from 'MyDbContext' but returns 'Widget' instead of IQueryable<T>
     {
@@ -22,4 +22,4 @@ For example, this method builds a query but materializes it instead of returning
 ```
 <!-- endInclude -->
 
-For more details, see the [full README](https://github.com/JayBazuzi/EntityFrameworkQueryAnalyzers#readme).
+For more details, see the [full README](https://github.com/JayBazuzi/EntityFrameworkAnalyzers#readme).

@@ -3,6 +3,7 @@
     <Project Path="src/EntityFrameworkAnalyzers/EntityFrameworkAnalyzers.csproj" />
   </Folder>
   <Folder Name="/test/">
+    <Project Path="test/EntityFrameworkAnalyzers.Examples/EntityFrameworkAnalyzers.Examples.csproj" />
     <Project Path="test/EntityFrameworkAnalyzers.Tests/EntityFrameworkAnalyzers.Tests.csproj" />
   </Folder>
 </Solution>

@@ -57,16 +57,14 @@ And you can add a test:
 <!-- snippet: verify-GetActiveWidgetsQuery -->
 <a id='snippet-verify-GetActiveWidgetsQuery'></a>
 ```cs
-[Fact]
-public Task GetActiveWidgetsQuery_ReturnsOnlyActiveWidgets()
-{
-    using var db = new MyDbContext();
-    var manager = new WidgetManager(db);
-
-    return Verify(manager.GetActiveWidgetsQuery());
-}
+await Verify(manager.GetActiveWidgetsQuery().ToQueryString())
+    .Snapshot("""
+        SELECT "w"."Id", "w"."IsActive"
+        FROM "Widgets" AS "w"
+        WHERE "w"."IsActive"
+        """);
 ```
-<sup><a href='/test/EntityFrameworkAnalyzers.Tests/DbContextQueryAnalyzerTests.cs#L70-L79' title='Snippet source file'>snippet source</a> | <a href='#snippet-verify-GetActiveWidgetsQuery' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/test/EntityFrameworkAnalyzers.Examples/WidgetManagerTests.cs#L33-L40' title='Snippet source file'>snippet source</a> | <a href='#snippet-verify-GetActiveWidgetsQuery' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Navigation property must only be read inside a query

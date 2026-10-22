@@ -1,4 +1,4 @@
-using Verify = Bazuzi.EntityFrameworkAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkAnalyzers.PreferGenericHasOneAnalyzer>;
+﻿using Verify = Bazuzi.EntityFrameworkAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkAnalyzers.PreferGenericHasOneAnalyzer>;
 
 namespace Bazuzi.EntityFrameworkAnalyzers.Tests;
 

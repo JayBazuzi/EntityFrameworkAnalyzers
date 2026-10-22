@@ -1,4 +1,4 @@
-using Verify = Bazuzi.EntityFrameworkAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkAnalyzers.PrimaryKeyShouldBeNamedIdAnalyzer>;
+﻿using Verify = Bazuzi.EntityFrameworkAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkAnalyzers.PrimaryKeyShouldBeNamedIdAnalyzer>;
 
 namespace Bazuzi.EntityFrameworkAnalyzers.Tests;
 

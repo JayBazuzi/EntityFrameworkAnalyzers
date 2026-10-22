@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -164,7 +164,7 @@ public sealed class ForeignKeyNameShouldMatchEntityAnalyzer : DiagnosticAnalyzer
         }
         else if (builder.Name == "ReferenceReferenceBuilder" && method.TypeArguments.Length == 1)
         {
-            principal = Enumerable.FirstOrDefault(builder.TypeArguments, 
+            principal = Enumerable.FirstOrDefault(builder.TypeArguments,
                 t => !SymbolEqualityComparer.Default.Equals(t, method.TypeArguments[0])) as INamedTypeSymbol;
         }
         else

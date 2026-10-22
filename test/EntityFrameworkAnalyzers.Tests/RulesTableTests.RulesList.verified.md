@@ -6,3 +6,4 @@
 - Primary key should be named `Id`
 - Prefer generic `HasOne<T>()` over string `HasOne("...")`
 - DbContext should have one `DbSet<T>` per entity type
+- `Entity<T>()` lambda parameter should be named after the entity type

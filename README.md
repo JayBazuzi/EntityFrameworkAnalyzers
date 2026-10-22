@@ -19,6 +19,7 @@ Roslyn analyzers for Entity Framework Core queries.
 | ENTITY_FRAMEWORK_0006 | Primary key should be named `Id` |
 | ENTITY_FRAMEWORK_0007 | Prefer generic `HasOne<T>()` over string `HasOne("...")` |
 | ENTITY_FRAMEWORK_0008 | DbContext should have one `DbSet<T>` per entity type |
+| ENTITY_FRAMEWORK_0009 | `Entity<T>()` lambda parameter should be named after the entity type |
 <!-- endInclude -->
 
 ENTITY_FRAMEWORK_0002 is Info by default because you may prefer to use lazy loading and/or `Include()`. But if your style is to always project your read queries, you can elevate it to Warning.
@@ -136,3 +137,27 @@ Foreign keys are read from the EF model, so keys configured by convention, `[For
 Name every primary key `Id`, not `OrderId` or `Number`.
 
 Primary keys are read from the EF model, so keys configured by convention (`Id` or `{TypeName}Id`), `[Key]` or `HasKey` are all covered. Composite keys are skipped.
+
+## `Entity<T>()` lambda parameter should be named after the entity type
+
+In a long `OnModelCreating`, a parameter called `entity` in every block doesn't say which entity you're configuring. Name the parameter after the entity type.
+
+Good:
+
+```cs
+modelBuilder.Entity<ClassSchedule>(classScheduleEntity =>
+{
+    classScheduleEntity.HasKey(schedule => schedule.Id);
+});
+```
+
+Bad:
+
+```cs
+modelBuilder.Entity<ClassSchedule>(entity =>
+{
+    entity.HasKey(schedule => schedule.Id);
+});
+```
+
+Any name that starts with the camelCase entity name is accepted: `classSchedule`, `classScheduleEntity`, `classScheduleBuilder`.

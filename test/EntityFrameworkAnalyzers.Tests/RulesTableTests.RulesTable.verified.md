@@ -8,3 +8,4 @@
 | ENTITY_FRAMEWORK_0006 | Primary key should be named `Id` |
 | ENTITY_FRAMEWORK_0007 | Prefer generic `HasOne<T>()` over string `HasOne("...")` |
 | ENTITY_FRAMEWORK_0008 | DbContext should have one `DbSet<T>` per entity type |
+| ENTITY_FRAMEWORK_0009 | `Entity<T>()` lambda parameter should be named after the entity type |

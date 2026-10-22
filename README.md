@@ -103,15 +103,15 @@ public class Order
 
 When a navigation property and its foreign key describe the same relationship, their names should agree: `CustomerId` goes with `Customer`, `BuyerId` goes with `Buyer`. A mismatch makes it unclear which property is the other's partner.
 
-<!-- snippet: ForeignKeyNameShouldMatchNavigationAnalyzerExample -->
-<a id='snippet-ForeignKeyNameShouldMatchNavigationAnalyzerExample'></a>
+<!-- snippet: NavigationShouldMatchForeignKeyAnalyzerExample -->
+<a id='snippet-NavigationShouldMatchForeignKeyAnalyzerExample'></a>
 ```cs
 modelBuilder.Entity<Order>()
     .HasOne(o => o.{|#0:Customer|}) // info: Navigation property 'Customer' should be named 'Buyer' to match foreign key 'BuyerId'
     .WithMany()
     .HasForeignKey(o => o.BuyerId);
 ```
-<sup><a href='/test/EntityFrameworkAnalyzers.Tests/ForeignKeyNameShouldMatchNavigationAnalyzerTests.cs#L33-L38' title='Snippet source file'>snippet source</a> | <a href='#snippet-ForeignKeyNameShouldMatchNavigationAnalyzerExample' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/test/EntityFrameworkAnalyzers.Tests/NavigationShouldMatchForeignKeyAnalyzerTests.cs#L33-L38' title='Snippet source file'>snippet source</a> | <a href='#snippet-NavigationShouldMatchForeignKeyAnalyzerExample' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Foreign key name should end with the entity name and `Id`

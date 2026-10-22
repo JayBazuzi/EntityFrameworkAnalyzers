@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+using Microsoft.CodeAnalysis;
 
 namespace Bazuzi.EntityFrameworkAnalyzers;
 
@@ -82,5 +84,64 @@ internal static class EntityFrameworkTypes
         }
 
         return root is { Name: "System" };
+    }
+
+    public static ImmutableHashSet<INamedTypeSymbol> FindEntityTypes(Compilation compilation)
+    {
+        var entityTypes = new HashSet<INamedTypeSymbol>(SymbolEqualityComparer.Default);
+        var pending = new Stack<INamedTypeSymbol>();
+
+        foreach (var type in GetSourceTypes(compilation.Assembly.GlobalNamespace))
+        {
+            if (!IsDbContextType(type))
+            {
+                continue;
+            }
+
+            foreach (var dbSet in type.GetMembers().OfType<IPropertySymbol>())
+            {
+                if (IsDbSetType(dbSet.Type)
+                    && ((INamedTypeSymbol)dbSet.Type).TypeArguments[0] is INamedTypeSymbol entityType)
+                {
+                    pending.Push(entityType);
+                }
+            }
+        }
+
+        while (pending.Count > 0)
+        {
+            var entityType = pending.Pop();
+            if (!entityTypes.Add(entityType))
+            {
+                continue;
+            }
+
+            foreach (var property in entityType.GetMembers().OfType<IPropertySymbol>())
+            {
+                if (GetNavigationTarget(property.Type) is { } target
+                    && SymbolEqualityComparer.Default.Equals(target.ContainingAssembly, compilation.Assembly))
+                {
+                    pending.Push(target);
+                }
+            }
+        }
+
+        return entityTypes.ToImmutableHashSet<INamedTypeSymbol>(SymbolEqualityComparer.Default);
+    }
+
+    private static IEnumerable<INamedTypeSymbol> GetSourceTypes(INamespaceSymbol @namespace)
+    {
+        foreach (var type in @namespace.GetTypeMembers())
+        {
+            yield return type;
+        }
+
+        foreach (var child in @namespace.GetNamespaceMembers())
+        {
+            foreach (var type in GetSourceTypes(child))
+            {
+                yield return type;
+            }
+        }
     }
 }

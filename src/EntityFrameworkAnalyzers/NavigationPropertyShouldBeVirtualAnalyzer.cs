@@ -34,7 +34,7 @@ public sealed class NavigationPropertyShouldBeVirtualAnalyzer : DiagnosticAnalyz
         context.EnableConcurrentExecution();
         context.RegisterCompilationStartAction(compilationContext =>
         {
-            var entityTypes = FindEntityTypes(compilationContext.Compilation);
+            var entityTypes = EntityFrameworkTypes.FindEntityTypes(compilationContext.Compilation);
             if (entityTypes.Count == 0)
             {
                 return;
@@ -68,64 +68,5 @@ public sealed class NavigationPropertyShouldBeVirtualAnalyzer : DiagnosticAnalyz
             property.Locations[0],
             containingType.Name,
             property.Name));
-    }
-
-    private static ImmutableHashSet<INamedTypeSymbol> FindEntityTypes(Compilation compilation)
-    {
-        var entityTypes = new HashSet<INamedTypeSymbol>(SymbolEqualityComparer.Default);
-        var pending = new Stack<INamedTypeSymbol>();
-
-        foreach (var type in GetSourceTypes(compilation.Assembly.GlobalNamespace))
-        {
-            if (!EntityFrameworkTypes.IsDbContextType(type))
-            {
-                continue;
-            }
-
-            foreach (var dbSet in type.GetMembers().OfType<IPropertySymbol>())
-            {
-                if (EntityFrameworkTypes.IsDbSetType(dbSet.Type)
-                    && ((INamedTypeSymbol)dbSet.Type).TypeArguments[0] is INamedTypeSymbol entityType)
-                {
-                    pending.Push(entityType);
-                }
-            }
-        }
-
-        while (pending.Count > 0)
-        {
-            var entityType = pending.Pop();
-            if (!entityTypes.Add(entityType))
-            {
-                continue;
-            }
-
-            foreach (var property in entityType.GetMembers().OfType<IPropertySymbol>())
-            {
-                if (EntityFrameworkTypes.GetNavigationTarget(property.Type) is { } target
-                    && SymbolEqualityComparer.Default.Equals(target.ContainingAssembly, compilation.Assembly))
-                {
-                    pending.Push(target);
-                }
-            }
-        }
-
-        return entityTypes.ToImmutableHashSet<INamedTypeSymbol>(SymbolEqualityComparer.Default);
-    }
-
-    private static IEnumerable<INamedTypeSymbol> GetSourceTypes(INamespaceSymbol @namespace)
-    {
-        foreach (var type in @namespace.GetTypeMembers())
-        {
-            yield return type;
-        }
-
-        foreach (var child in @namespace.GetNamespaceMembers())
-        {
-            foreach (var type in GetSourceTypes(child))
-            {
-                yield return type;
-            }
-        }
     }
 }

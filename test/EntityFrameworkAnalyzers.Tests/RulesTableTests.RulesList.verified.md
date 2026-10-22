@@ -1,4 +1,5 @@
-- Method building a query must return `IQueryable<T>`
+﻿- Method building a query must return `IQueryable<T>`
 - Navigation property must only be read inside a query
 - Navigation property should be `virtual`
 - Navigation property name should match the foreign key
+- Foreign key name should end with the entity name and `Id`

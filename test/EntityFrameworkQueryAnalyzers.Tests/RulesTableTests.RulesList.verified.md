@@ -1,1 +1,3 @@
 ﻿- Method building a query must return `IQueryable<T>`
+- Navigation property must only be read inside a query
+- Navigation property should be `virtual`

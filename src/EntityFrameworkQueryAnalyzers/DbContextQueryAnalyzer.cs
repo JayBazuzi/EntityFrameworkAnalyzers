@@ -122,8 +122,8 @@ public sealed class DbContextQueryAnalyzer : DiagnosticAnalyzer
             var symbol = symbolInfo.Symbol;
 
             if (symbol is IPropertySymbol propertySymbol
-                && IsDbContextType(propertySymbol.ContainingType)
-                && IsDbSetType(propertySymbol.Type))
+                && EntityFrameworkTypes.IsDbContextType(propertySymbol.ContainingType)
+                && EntityFrameworkTypes.IsDbSetType(propertySymbol.Type))
             {
                 if (IsWriteAccess(memberAccess))
                 {
@@ -136,8 +136,8 @@ public sealed class DbContextQueryAnalyzer : DiagnosticAnalyzer
             // DbContext.Set<T>() calls.
             if (symbol is IMethodSymbol methodSymbol
                 && methodSymbol.Name == "Set"
-                && IsDbContextType(methodSymbol.ContainingType)
-                && IsDbSetType(methodSymbol.ReturnType))
+                && EntityFrameworkTypes.IsDbContextType(methodSymbol.ContainingType)
+                && EntityFrameworkTypes.IsDbSetType(methodSymbol.ReturnType))
             {
                 var receiverType = semanticModel.GetTypeInfo(memberAccess.Expression, cancellationToken).Type;
                 return (receiverType?.ToDisplayString() ?? methodSymbol.ContainingType.ToDisplayString(), memberAccess.GetLocation());
@@ -160,25 +160,6 @@ public sealed class DbContextQueryAnalyzer : DiagnosticAnalyzer
         return memberAccess.Parent is MemberAccessExpressionSyntax parentAccess
             && parentAccess.Expression == memberAccess
             && WriteMethodNames.Contains(parentAccess.Name.Identifier.Text);
-    }
-
-    private static bool IsDbContextType(ITypeSymbol? type)
-    {
-        for (var current = type; current is not null; current = current.BaseType)
-        {
-            if (current.ToDisplayString() == "Microsoft.EntityFrameworkCore.DbContext")
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool IsDbSetType(ITypeSymbol type)
-    {
-        return type is INamedTypeSymbol { IsGenericType: true } named
-            && named.ConstructedFrom.ToDisplayString() == "Microsoft.EntityFrameworkCore.DbSet<TEntity>";
     }
 
     private static bool IsIQueryable(ITypeSymbol? type)

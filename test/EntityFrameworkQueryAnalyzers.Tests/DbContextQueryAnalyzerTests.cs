@@ -10,6 +10,7 @@ public class DbContextQueryAnalyzerTests
 
         public class Widget
         {
+            public bool IsActive { get; set; }
         }
 
         public class MyDbContext : DbContext
@@ -38,7 +39,7 @@ public class DbContextQueryAnalyzerTests
     {
         var expected = Verify.Diagnostic(DbContextQueryAnalyzer.DiagnosticId)
             .WithLocation(0)
-            .WithArguments("GetFirst", "MyDbContext", "Widget");
+            .WithArguments("GetFirstActive", "MyDbContext", "Widget");
 
         await Verify.VerifyAnalyzerAsync(DirectDbSetAccessSource, expected);
     }

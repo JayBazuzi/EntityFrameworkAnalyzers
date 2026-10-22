@@ -4,7 +4,9 @@ Roslyn analyzers for Entity Framework Core queries.
 
 ## Rules
 
-- Method building a query must return `IQueryable<T>`<!-- singleLineInclude: test\EntityFrameworkQueryAnalyzers.Tests\RulesTableTests.RulesList.verified.md -->
+- Method building a query must return `IQueryable<T>`<!-- include: test\EntityFrameworkQueryAnalyzers.Tests\RulesTableTests.RulesList.verified.md -->
+- Navigation property must only be read inside a query
+- Navigation property should be `virtual`<!-- endInclude -->
 
 ## Example
 
@@ -12,15 +14,10 @@ For example, this method builds a query but materializes it instead of returning
 
 <!-- include: test\EntityFrameworkQueryAnalyzers.Tests\NugetReadmeTests.Example.verified.md -->
 ```cs
-public class WidgetManager
-{
-    private readonly MyDbContext _dbContext = null!;
-
-    public Widget GetFirst() // info: Method 'GetFirst' builds a query from 'MyDbContext' but returns 'Widget' instead of IQueryable<T>
+    public Widget GetFirstActive() // info: Method 'GetFirstActive' builds a query from 'MyDbContext' but returns 'Widget' instead of IQueryable<T>
     {
-        return _dbContext.Widgets.First();
+        return _dbContext.Widgets.Where(w => w.IsActive).First();
     }
-}
 ```
 <!-- endInclude -->
 

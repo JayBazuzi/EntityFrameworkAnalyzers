@@ -1,4 +1,4 @@
-using Verify = Bazuzi.EntityFrameworkAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkAnalyzers.EntityLambdaParameterNameAnalyzer>;
+﻿using Verify = Bazuzi.EntityFrameworkAnalyzers.Tests.CSharpAnalyzerVerifier<Bazuzi.EntityFrameworkAnalyzers.EntityLambdaParameterNameAnalyzer>;
 
 namespace Bazuzi.EntityFrameworkAnalyzers.Tests;
 

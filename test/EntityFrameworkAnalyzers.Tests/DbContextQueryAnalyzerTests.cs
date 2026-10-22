@@ -53,15 +53,31 @@ public class DbContextQueryAnalyzerTests
             {
                 private readonly MyDbContext _dbContext = null!;
 
+                // begin-snippet: DirectDbSetAccess_ReturningIQueryable
                 public IQueryable<Widget> GetActiveWidgetsQuery()
                 {
                     return _dbContext.Widgets.Where(w => w.IsActive);
                 }
+                // end-snippet
             }
             """;
 
         await Verify.VerifyAnalyzerAsync(source);
     }
+
+    // Illustrative only: shown in the README, not compiled (needs Verify.EntityFramework).
+    internal const string VerifyQueryExample = """
+        // begin-snippet: verify-GetActiveWidgetsQuery
+        [Fact]
+        public Task GetActiveWidgetsQuery_ReturnsOnlyActiveWidgets()
+        {
+            using var db = new MyDbContext();
+            var manager = new WidgetManager(db);
+
+            return Verify(manager.GetActiveWidgetsQuery());
+        }
+        // end-snippet
+        """;
 
     [Fact]
     public async Task SetOfTAccess_NotReturningIQueryable_IsFlagged()

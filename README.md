@@ -25,6 +25,8 @@ ENTITY_FRAMEWORK_0002 is Info by default because you may prefer to use lazy load
 
 Keep query construction separate from execution: a method that builds a query from a `DbContext` should return `IQueryable<T>`. The query can then be tested with Verify unit tests. See [Verify.EntityFramework](https://github.com/VerifyTests/Verify.EntityFramework).
 
+### Before:
+
 <!-- snippet: DbContextQueryAnalyzerExample -->
 <a id='snippet-DbContextQueryAnalyzerExample'></a>
 ```cs
@@ -34,6 +36,36 @@ public Widget {|#0:GetFirstActive|}() // info: Method 'GetFirstActive' builds a 
 }
 ```
 <sup><a href='/test/EntityFrameworkAnalyzers.Tests/DbContextQueryAnalyzerTests.cs#L28-L33' title='Snippet source file'>snippet source</a> | <a href='#snippet-DbContextQueryAnalyzerExample' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+### After:
+
+<!-- snippet: DirectDbSetAccess_ReturningIQueryable -->
+<a id='snippet-DirectDbSetAccess_ReturningIQueryable'></a>
+```cs
+public IQueryable<Widget> GetActiveWidgetsQuery()
+{
+    return _dbContext.Widgets.Where(w => w.IsActive);
+}
+```
+<sup><a href='/test/EntityFrameworkAnalyzers.Tests/DbContextQueryAnalyzerTests.cs#L56-L61' title='Snippet source file'>snippet source</a> | <a href='#snippet-DirectDbSetAccess_ReturningIQueryable' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+And you can add a test:
+
+<!-- snippet: verify-GetActiveWidgetsQuery -->
+<a id='snippet-verify-GetActiveWidgetsQuery'></a>
+```cs
+[Fact]
+public Task GetActiveWidgetsQuery_ReturnsOnlyActiveWidgets()
+{
+    using var db = new MyDbContext();
+    var manager = new WidgetManager(db);
+
+    return Verify(manager.GetActiveWidgetsQuery());
+}
+```
+<sup><a href='/test/EntityFrameworkAnalyzers.Tests/DbContextQueryAnalyzerTests.cs#L70-L79' title='Snippet source file'>snippet source</a> | <a href='#snippet-verify-GetActiveWidgetsQuery' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Navigation property must only be read inside a query

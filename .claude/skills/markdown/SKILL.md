@@ -7,6 +7,8 @@ description: How to edit Markdown in this project. Use when writing or editing a
 
 NEVER write code blocks directly in the Markdown. Always use `begin-snippet`/`end-snippet` in the test files and let `mdsnippets` generate the code blocks.
 
+Snippets must come from real, compiled code. Never put snippet markers inside a string literal, a `#if false` block, or a comment to show code that isn't compiled: that is a hand-written code block in disguise and can drift from the real API. If an example needs a dependency the tests don't reference, add the dependency and write real code. You may need to create a new csproj to host it, that's fine.
+
 ## Generated regions
 
 Markdown files often contain regions that `mdsnippets` overwrites. Never hand-edit the content between these markers; edit the source instead.

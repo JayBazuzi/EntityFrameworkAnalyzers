@@ -8,7 +8,8 @@ Roslyn analyzers for Entity Framework Core queries.
 - Navigation property must only be read inside a query
 - Navigation property should be `virtual`
 - Navigation property name should match the foreign key
-- Foreign key name should end with the entity name and `Id`<!-- endInclude -->
+- Foreign key name should end with the entity name and `Id`
+- Primary key should be named `Id`<!-- endInclude -->
 
 ## Example
 

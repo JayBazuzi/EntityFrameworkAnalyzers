@@ -16,6 +16,7 @@ Roslyn analyzers for Entity Framework Core queries.
 | ENTITY_FRAMEWORK_0003 | Navigation property should be `virtual` |
 | ENTITY_FRAMEWORK_0004 | Navigation property name should match the foreign key |
 | ENTITY_FRAMEWORK_0005 | Foreign key name should end with the entity name and `Id` |
+| ENTITY_FRAMEWORK_0006 | Primary key should be named `Id` |
 <!-- endInclude -->
 
 ENTITY_FRAMEWORK_0002 is Info by default because you may prefer to use lazy loading and/or `Include()`. But if your style is to always project your read queries, you can elevate it to Warning.
@@ -86,3 +87,9 @@ The rule reports a foreign key property whose name does not end with `{Principal
 | `OwnerId` | `User` | Reported |
 
 Foreign keys are read from the EF model, so keys configured by convention, `[ForeignKey]` or the Fluent API are all covered. Composite keys, foreign keys to alternate keys and shadow properties are skipped. See [docs/foreign-key-naming.md](docs/foreign-key-naming.md) for details.
+
+## Primary key should be named `Id`
+
+Name every primary key `Id`, not `OrderId` or `Number`.
+
+Primary keys are read from the EF model, so keys configured by convention (`Id` or `{TypeName}Id`), `[Key]` or `HasKey` are all covered. Composite keys are skipped.

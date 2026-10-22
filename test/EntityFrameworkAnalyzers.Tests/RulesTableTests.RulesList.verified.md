@@ -3,3 +3,4 @@
 - Navigation property should be `virtual`
 - Navigation property name should match the foreign key
 - Foreign key name should end with the entity name and `Id`
+- Primary key should be named `Id`

@@ -5,3 +5,4 @@
 | ENTITY_FRAMEWORK_0003 | Navigation property should be `virtual` |
 | ENTITY_FRAMEWORK_0004 | Navigation property name should match the foreign key |
 | ENTITY_FRAMEWORK_0005 | Foreign key name should end with the entity name and `Id` |
+| ENTITY_FRAMEWORK_0006 | Primary key should be named `Id` |

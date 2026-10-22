@@ -17,6 +17,8 @@ Roslyn analyzers for Entity Framework Core queries.
 | ENTITY_FRAMEWORK_0004 | Navigation property name should match the foreign key |
 <!-- endInclude -->
 
+ENTITY_FRAMEWORK_0002 is Info by default because you may prefer to use lazy loading and/or Include(). But if your style is to always project your read queries, you might want to elevate it to Warning.
+
 ## Examples
 
 Keep query construction separate from execution: a method that builds a query from a `DbContext` should return `IQueryable<T>`. The query can then be tested with Verify unit tests. See [Verify.EntityFramework](https://github.com/VerifyTests/Verify.EntityFramework).

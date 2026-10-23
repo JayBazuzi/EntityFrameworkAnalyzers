@@ -111,6 +111,55 @@ public class NavigationShouldMatchForeignKeyAnalyzerTests
     }
 
     [Fact]
+    public async Task ForeignKeyNamedAfterSharedPrimaryKey_IsNotFlagged()
+    {
+        const string source = """
+            using System.Collections.Generic;
+            using Microsoft.EntityFrameworkCore;
+
+            public class Person
+            {
+                public int Id { get; set; }
+                public virtual Customer? Customer { get; set; }
+            }
+
+            public class Customer
+            {
+                public int PersonId { get; set; }
+                public virtual Person Person { get; set; } = null!;
+                public virtual ICollection<Order> Orders { get; set; } = [];
+            }
+
+            public class Order
+            {
+                public int Id { get; set; }
+                public int PersonId { get; set; }
+                public virtual Customer Customer { get; set; } = null!;
+                public virtual Person Person { get; set; } = null!;
+            }
+
+            public class ShopDbContext : DbContext
+            {
+                protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                    modelBuilder.Entity<Customer>().HasKey(c => c.PersonId);
+
+                    modelBuilder.Entity<Order>(e =>
+                    {
+                        e.HasOne(d => d.Customer).WithMany(p => p.Orders)
+                            .HasForeignKey(d => d.PersonId);
+
+                        e.HasOne(d => d.Person).WithMany()
+                            .HasForeignKey(d => d.PersonId);
+                    });
+                }
+            }
+            """;
+
+        await Verify.VerifyAnalyzerAsync(source);
+    }
+
+    [Fact]
     public async Task HasForeignKeyWithoutHasOne_IsNotFlagged()
     {
         const string source = Entities + """

@@ -105,6 +105,8 @@ public class Order
 
 When a navigation property and its foreign key describe the same relationship, their names should agree: `CustomerId` goes with `Customer`, `BuyerId` goes with `Buyer`. A mismatch makes it unclear which property is the other's partner.
 
+The rule skips a foreign key named after the principal's key rather than the principal itself. For example, `Order.PersonId` → `Customer`, where `Customer`'s primary key is `PersonId` because it shares a primary key with `Person`.
+
 <!-- snippet: NavigationShouldMatchForeignKeyAnalyzerExample -->
 <a id='snippet-NavigationShouldMatchForeignKeyAnalyzerExample'></a>
 ```cs

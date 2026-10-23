@@ -47,8 +47,8 @@ public sealed class NavigationShouldMatchForeignKeyAnalyzer : DiagnosticAnalyzer
             return;
         }
 
-        var (navigation, location) = FindHasOneNavigation(invocation);
-        if (navigation is null || location is null)
+        var (hasOne, navigation, location) = FindHasOneNavigation(invocation);
+        if (hasOne is null || navigation is null || location is null)
         {
             return;
         }
@@ -67,6 +67,11 @@ public sealed class NavigationShouldMatchForeignKeyAnalyzer : DiagnosticAnalyzer
             return;
         }
 
+        if (PrincipalHasProperty(context, hasOne, foreignKey))
+        {
+            return;
+        }
+
         context.ReportDiagnostic(Diagnostic.Create(Rule, location, navigation, expected, foreignKey));
     }
 
@@ -76,23 +81,51 @@ public sealed class NavigationShouldMatchForeignKeyAnalyzer : DiagnosticAnalyzer
         return method?.ContainingNamespace?.ToDisplayString().StartsWith("Microsoft.EntityFrameworkCore", StringComparison.Ordinal) == true;
     }
 
+    // When the principal has a property with the foreign key's name, the foreign key is named after the
+    // principal's key rather than the principal, as in a shared primary key (Customer.PersonId as both key and FK to Person).
+    private static bool PrincipalHasProperty(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax hasOne, string propertyName)
+    {
+        var method = context.SemanticModel.GetSymbolInfo(hasOne, context.CancellationToken).Symbol as IMethodSymbol;
+        if (method is null || method.TypeArguments.Length != 1)
+        {
+            return false;
+        }
+
+        for (var type = method.TypeArguments[0]; type is not null; type = type.BaseType)
+        {
+            foreach (var member in type.GetMembers(propertyName))
+            {
+                if (member is IPropertySymbol)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     // Walks back along the fluent chain looking for HasOne(x => x.Nav).
-    private static (string? name, Location? location) FindHasOneNavigation(InvocationExpressionSyntax invocation)
+    private static (InvocationExpressionSyntax? hasOne, string? name, Location? location) FindHasOneNavigation(InvocationExpressionSyntax invocation)
     {
         ExpressionSyntax? current = (invocation.Expression as MemberAccessExpressionSyntax)?.Expression;
         while (current is InvocationExpressionSyntax call)
         {
             if (GetMethodName(call) == "HasOne")
             {
-                return call.ArgumentList.Arguments.Count == 1
-                    ? GetNameAndLocation(call.ArgumentList.Arguments[0].Expression)
-                    : (null, null);
+                if (call.ArgumentList.Arguments.Count != 1)
+                {
+                    return (null, null, null);
+                }
+
+                var (name, location) = GetNameAndLocation(call.ArgumentList.Arguments[0].Expression);
+                return (call, name, location);
             }
 
             current = (call.Expression as MemberAccessExpressionSyntax)?.Expression;
         }
 
-        return (null, null);
+        return (null, null, null);
     }
 
     // Extracts the member name from `x => x.Name` or "Name", with the location to report on.

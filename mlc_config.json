@@ -2,7 +2,7 @@
   "replacementPatterns": [
     {
       "pattern": "^/",
-      "replacement": "https://github.com/JayBazuzi/EntityFrameworkAnalyzers/blob/main/"
+      "replacement": "{{BASEURL}}/"
     }
   ]
 }

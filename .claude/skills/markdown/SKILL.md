@@ -32,5 +32,5 @@ NuGet's renderer is more limited than GitHub's, so avoid HTML, relative images, 
 
 ## Links
 
-CI checks links with `markdown-link-check`. `mlc_config.json` maps root-relative links (`/path`), so prefer root-relative links to repo files in `README.md`. In `README.nuget.md`, use absolute URLs, since NuGet can't resolve repo paths.
+CI checks links with `lychee`. Root-relative links (`/path`) resolve against the repo root, so prefer them for repo files in `README.md`. In `README.nuget.md`, use absolute URLs, since NuGet can't resolve repo paths.
 
